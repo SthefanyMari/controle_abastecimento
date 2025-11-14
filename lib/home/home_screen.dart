@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-import 'login_screen.dart';
+import '../views/login_screen.dart';
+import '../screens/veiculos/veiculos_list_screen.dart'; // IMPORT CORRETO
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,16 +15,40 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Controle de Abastecimento'),
         actions: [
           IconButton(
-              onPressed: () async {
-                await auth.logout();
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => const LoginScreen()));
-              },
-              icon: const Icon(Icons.logout))
+            onPressed: () async {
+              await auth.logout();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
+              );
+            },
+            icon: const Icon(Icons.logout),
+          )
         ],
       ),
-      body: const Center(
-        child: Text('Bem-vindo! Usuário logado.'),
+
+      /// 🌟 AQUI ESTÁ A TELA COM O BOTÃO PARA VEÍCULOS
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Bem-vindo! Usuário logado.'),
+
+            const SizedBox(height: 20),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const VeiculosListScreen(),
+                  ),
+                );
+              },
+              child: const Text("Gerenciar Veículos"),
+            ),
+          ],
+        ),
       ),
     );
   }
